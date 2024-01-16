@@ -8,7 +8,7 @@ const {
   aupdateCategory,
   deleteCategory,
   getCategories,
-  getCategory
+  getCategory,
 } = require("../controllers/catalog");
 
 // @route   POST /catalog
