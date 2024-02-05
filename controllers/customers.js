@@ -213,7 +213,6 @@ exports.editCustomerInfo = (req, res) => {
       })
     );
 };
-
 // Controller for editing customer password
 exports.updatePassword = (req, res) => {
   // Check Validation
@@ -236,8 +235,8 @@ exports.updatePassword = (req, res) => {
 
         bcrypt.genSalt(10, (err, salt) => {
           bcrypt.hash(newPassword, salt, (err, hash) => {
-            if (err) throw err;
             newPassword = hash;
+            if (err) throw err;
             Customer.findOneAndUpdate(
               { _id: req.user.id },
               {

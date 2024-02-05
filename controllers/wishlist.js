@@ -1,7 +1,7 @@
-const Wishlist = require('../models/Wishlist');
-const Product = require('../models/Product');
-const queryCreator = require('../commonHelpers/queryCreator');
-const _ = require('lodash');
+const Wishlist = require("../models/Wishlist");
+const Product = require("../models/Product");
+const queryCreator = require("../commonHelpers/queryCreator");
+const _ = require("lodash");
 
 exports.createWishlist = (req, res, next) => {
   Wishlist.findOne({ customerId: req.user.id }).then((wishlist) => {
@@ -15,7 +15,7 @@ exports.createWishlist = (req, res, next) => {
 
       const newWishlist = new Wishlist(queryCreator(wishlistData));
 
-      newWishlist.populate('products').populate('customerId').execPopulate();
+      newWishlist.populate("products").populate("customerId").execPopulate();
 
       newWishlist
         .save()
@@ -38,7 +38,7 @@ exports.updateWishlist = (req, res, next) => {
 
         const newWishlist = new Wishlist(queryCreator(wishlistData));
 
-        newWishlist.populate('products').populate('customerId').execPopulate();
+        newWishlist.populate("products").populate("customerId").execPopulate();
 
         newWishlist
           .save()
@@ -57,8 +57,8 @@ exports.updateWishlist = (req, res, next) => {
           { $set: updatedWishlist },
           { new: true }
         )
-          .populate('products')
-          .populate('customerId')
+          .populate("products")
+          .populate("customerId")
           .then((wishlist) => res.json(wishlist))
           .catch((err) =>
             res.status(400).json({
@@ -99,8 +99,8 @@ exports.addProductToWishlist = async (req, res, next) => {
           const newWishlist = new Wishlist(queryCreator(wishlistData));
 
           newWishlist
-            .populate('products')
-            .populate('customerId')
+            .populate("products")
+            .populate("customerId")
             .execPopulate();
 
           newWishlist
@@ -123,8 +123,8 @@ exports.addProductToWishlist = async (req, res, next) => {
             { $set: updatedWishlist },
             { new: true }
           )
-            .populate('products')
-            .populate('customerId')
+            .populate("products")
+            .populate("customerId")
             .then((wishlist) => res.json(wishlist))
             .catch((err) =>
               res.status(400).json({
@@ -181,8 +181,8 @@ exports.deleteProductFromWishlish = async (req, res, next) => {
           { $set: updatedWishlist },
           { new: true }
         )
-          .populate('products')
-          .populate('customerId')
+          .populate("products")
+          .populate("customerId")
           .then((wishlist) => res.json(wishlist))
           .catch((err) =>
             res.status(400).json({
@@ -226,8 +226,8 @@ exports.deleteWishlist = (req, res, next) => {
 
 exports.getWishlist = (req, res, next) => {
   Wishlist.findOne({ customerId: req.user.id })
-    .populate('products')
-    .populate('customerId')
+    .populate("products")
+    .populate("customerId")
     .then((wishlist) => res.json(wishlist))
     .catch((err) =>
       res.status(400).json({
