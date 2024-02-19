@@ -7,7 +7,7 @@ const {
   addSize,
   updateSize,
   deleteSize,
-  getSizes
+  getSizes,
 } = require("../controllers/sizes");
 
 // @route   POST /sizes
