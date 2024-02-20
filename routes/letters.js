@@ -6,13 +6,17 @@ const {
   addLetter,
   deleteLetter,
   getLetters,
+  updateLetter,
 } = require("../controllers/letters");
 
 // @route   POST /letter
 // @desc    Create new letter
 // @access  Private
 router.post("/", addLetter);
-
+// @route   PUT /letter/:id
+// @desc    Update existing letter
+// @access  Private
+router.put("/:id", updateLetter);
 // @route   DELETE /letter/:id
 // @desc    DELETE existing letter
 // @access  Private

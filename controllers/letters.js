@@ -47,6 +47,35 @@ exports.deleteLetter = (req, res, next) => {
     }
   });
 };
+exports.updateLetter = (req, res, next) => {
+  Letter.findOne({ _id: req.params.id })
+    .then((letter) => {
+      if (!letter) {
+        return res
+          .status(400)
+          .json({ message: `Size with _id "${req.params.id}" is not found.` });
+      } else {
+        const initialQuery = _.cloneDeep(req.body);
+        const updatedLetter = queryCreator(initialQuery);
+        Letter.findOneAndUpdate(
+          { _id: req.params.id },
+          { $set: updatedLetter },
+          { new: true }
+        )
+          .then((letter) => res.json(letter))
+          .catch((err) =>
+            res.status(400).json({
+              message: `Error happened on server: "${err}" `,
+            })
+          );
+      }
+    })
+    .catch((err) =>
+      res.status(400).json({
+        message: `Error happened on server: "${err}" `,
+      })
+    );
+};
 
 exports.getLetters = (req, res, next) => {
   Letter.find()

@@ -326,3 +326,12 @@ exports.getOrder = (req, res, next) => {
       })
     );
 };
+exports.getAllOrders = (req, res, next) => {
+  Order.find()
+    .then((order) => res.json(order))
+    .catch((err) =>
+      res.status(400).json({
+        message: `Error happened on server: "${err}" `,
+      })
+    );
+};
