@@ -24,6 +24,7 @@ const shippingMethods = require("./routes/shippingMethods");
 const paymentMethods = require("./routes/paymentMethods");
 const partners = require("./routes/partners");
 const letters = require("./routes/letters");
+const shopComment = require("./routes/shopComments");
 const cors = require("cors");
 const app = express();
 
@@ -58,6 +59,7 @@ app.use("/api/shipping-methods", shippingMethods);
 app.use("/api/payment-methods", paymentMethods);
 app.use("/api/partners", partners);
 app.use("/api/letters", letters);
+app.use("/api/shop-comments", shopComment);
 
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {
