@@ -52,7 +52,10 @@ exports.placeOrder = async (req, res, next) => {
         sum + cartItem.product.currentPrice * cartItem.cartQuantity,
       0
     );
-
+    if (order.promoCode) {
+      order.totalSum =
+        order.totalSum - (order.totalSum * order.promoCode) / 100;
+    }
     const productAvailibilityInfo = await productAvailibilityChecker(
       order.products
     );
