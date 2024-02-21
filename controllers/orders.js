@@ -175,9 +175,9 @@ exports.updateOrder = (req, res, next) => {
         }
       }
 
-      const subscriberMail = req.body.email;
-      const letterSubject = req.body.letterSubject;
-      const letterHtml = req.body.letterHtml;
+      // const subscriberMail = req.body.email;
+      // const letterSubject = req.body.letterSubject;
+      // const letterHtml = req.body.letterHtml;
 
       const { errors, isValid } = validateOrderForm(req.body);
 
@@ -186,19 +186,19 @@ exports.updateOrder = (req, res, next) => {
         return res.status(400).json(errors);
       }
 
-      if (!letterSubject) {
-        return res.status(400).json({
-          message:
-            "This operation involves sending a letter to the client. Please provide field 'letterSubject' for the letter.",
-        });
-      }
+      // if (!letterSubject) {
+      //   return res.status(400).json({
+      //     message:
+      //       "This operation involves sending a letter to the client. Please provide field 'letterSubject' for the letter.",
+      //   });
+      // }
 
-      if (!letterHtml) {
-        return res.status(400).json({
-          message:
-            "This operation involves sending a letter to the client. Please provide field 'letterHtml' for the letter.",
-        });
-      }
+      // if (!letterHtml) {
+      //   return res.status(400).json({
+      //     message:
+      //       "This operation involves sending a letter to the client. Please provide field 'letterHtml' for the letter.",
+      //   });
+      // }
 
       Order.findOneAndUpdate(
         { _id: req.params.id },
@@ -207,14 +207,14 @@ exports.updateOrder = (req, res, next) => {
       )
         .populate("customerId")
         .then(async (order) => {
-          const mailResult = await sendMail(
-            subscriberMail,
-            letterSubject,
-            letterHtml,
-            res
-          );
+          // const mailResult = await sendMail(
+          //   subscriberMail,
+          //   letterSubject,
+          //   letterHtml,
+          //   res
+          // );
 
-          res.json({ order, mailResult });
+          res.json({ order });
         })
         .catch((err) =>
           res.status(400).json({
