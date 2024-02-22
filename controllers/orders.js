@@ -100,12 +100,12 @@ exports.placeOrder = async (req, res, next) => {
       newOrder
         .save()
         .then(async (order) => {
-          // const mailResult = await sendMail(
-          //   subscriberMail,
-          //   letterSubject,
-          //   letterHtml,
-          //   res
-          // );
+          const mailResult = await sendMail(
+            subscriberMail,
+            letterSubject,
+            letterHtml,
+            res
+          );
           for (item of order.products) {
             const id = item.product._id;
             const product = await Product.findOne({ _id: id });
@@ -117,7 +117,7 @@ exports.placeOrder = async (req, res, next) => {
             );
           }
 
-          res.json({ order });
+          res.json({ order, mailResult });
         })
         .catch((err) =>
           res.status(400).json({
@@ -178,9 +178,9 @@ exports.updateOrder = (req, res, next) => {
         }
       }
 
-      // const subscriberMail = req.body.email;
-      // const letterSubject = req.body.letterSubject;
-      // const letterHtml = req.body.letterHtml;
+      const subscriberMail = req.body.email;
+      const letterSubject = req.body.letterSubject;
+      const letterHtml = req.body.letterHtml;
 
       const { errors, isValid } = validateOrderForm(req.body);
 
@@ -189,19 +189,19 @@ exports.updateOrder = (req, res, next) => {
         return res.status(400).json(errors);
       }
 
-      // if (!letterSubject) {
-      //   return res.status(400).json({
-      //     message:
-      //       "This operation involves sending a letter to the client. Please provide field 'letterSubject' for the letter.",
-      //   });
-      // }
+      if (!letterSubject) {
+        return res.status(400).json({
+          message:
+            "This operation involves sending a letter to the client. Please provide field 'letterSubject' for the letter.",
+        });
+      }
 
-      // if (!letterHtml) {
-      //   return res.status(400).json({
-      //     message:
-      //       "This operation involves sending a letter to the client. Please provide field 'letterHtml' for the letter.",
-      //   });
-      // }
+      if (!letterHtml) {
+        return res.status(400).json({
+          message:
+            "This operation involves sending a letter to the client. Please provide field 'letterHtml' for the letter.",
+        });
+      }
 
       Order.findOneAndUpdate(
         { _id: req.params.id },
@@ -210,14 +210,14 @@ exports.updateOrder = (req, res, next) => {
       )
         .populate("customerId")
         .then(async (order) => {
-          // const mailResult = await sendMail(
-          //   subscriberMail,
-          //   letterSubject,
-          //   letterHtml,
-          //   res
-          // );
+          const mailResult = await sendMail(
+            subscriberMail,
+            letterSubject,
+            letterHtml,
+            res
+          );
 
-          res.json({ order });
+          res.json({ order, mailResult });
         })
         .catch((err) =>
           res.status(400).json({
