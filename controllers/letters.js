@@ -1,9 +1,12 @@
 const Letter = require("../models/Letter");
 const queryCreator = require("../commonHelpers/queryCreator");
 const _ = require("lodash");
+const sendEmail = require('../commonHelpers/letterSender');
+
 
 exports.addLetter = (req, res, next) => {
   Letter.findOne({ name: req.body.name }).then((letter) => {
+    console.log("Found letter:", letter);
     if (letter) {
       return res
         .status(400)
@@ -13,13 +16,26 @@ exports.addLetter = (req, res, next) => {
       const newLetter = new Letter(queryCreator(initialQuery));
 
       newLetter
-        .save()
-        .then((letter) => res.json(letter))
-        .catch((err) =>
-          res.status(400).json({
-            message: `Error happened on server: "${err}" `,
+      .save()
+      .then((letter) => {
+        console.log(letter);
+        sendEmail(letter.name, letter.email, letter.letter, letter.phone, letter.question)
+          .then((result) => {
+            if (result.success) {
+              res.json(letter);
+            } else {
+              res.status(400).json({ message: `Error happened on server: "${result.error}"` });
+            }
           })
-        );
+          .catch((err) => {
+            res.status(400).json({ message: `Error happened on server: "${err}"` });
+          });
+      })
+      .catch((err) =>
+        res.status(400).json({
+          message: `Error happened on server: "${err}" `,
+        })
+      );
     }
   });
 };
