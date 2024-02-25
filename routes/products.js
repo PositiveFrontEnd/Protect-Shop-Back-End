@@ -12,6 +12,7 @@ const {
   getProducts,
   getProductById,
   searchProducts,
+  deleteProducts,
 } = require("../controllers/products");
 
 // Configurations for multer
@@ -92,5 +93,12 @@ router.get("/:id", getProductById);
 // @desc    POST appropriate to search query products
 // @access  Public
 router.post("/search", searchProducts);
-
+// @route   DELETE /product/:id
+// @desc    DELETE existing product
+// @access  Private
+router.delete(
+  "/:id",
+  passport.authenticate("jwt-admin", { session: false }),
+  deleteProducts
+);
 module.exports = router;

@@ -170,5 +170,31 @@ exports.searchProducts = async (req, res, next) => {
     $text: { $search: query },
   });
 
+  exports.deleteProducts = (req, res, next) => {
+    Product.findOne({ _id: req.params.id }).then(async (product) => {
+      if (!product) {
+        return res
+          .status(400)
+          .json({
+            message: `productToDelete with _id "${req.params.id}" is not found.`,
+          });
+      } else {
+        const productToDelete = await Product.findOne({ _id: req.params.id });
+
+        Product.deleteOne({ _id: req.params.id })
+          .then((deletedCount) =>
+            res.status(200).json({
+              message: `productToDelete witn name "${productToDelete.name}" is successfully deletes from DB `,
+            })
+          )
+          .catch((err) =>
+            res.status(400).json({
+              message: `Error happened on server: "${err}" `,
+            })
+          );
+      }
+    });
+  };
+
   res.send(matchedProducts);
 };
