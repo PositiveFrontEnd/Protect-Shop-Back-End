@@ -12,7 +12,7 @@ const {
   getProducts,
   getProductById,
   searchProducts,
-  deleteProducts,
+  deleteProduct,
 } = require("../controllers/products");
 
 // Configurations for multer
@@ -99,6 +99,6 @@ router.post("/search", searchProducts);
 router.delete(
   "/:id",
   passport.authenticate("jwt-admin", { session: false }),
-  deleteProducts
+  deleteProduct
 );
 module.exports = router;
