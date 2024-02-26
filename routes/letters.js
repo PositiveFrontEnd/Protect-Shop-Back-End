@@ -26,10 +26,11 @@ router.delete("/:id", deleteLetter);
 // @route   GET /letter
 // @desc    GET existing letter
 // @access  Public
+
 router.get("/", getLetters);
 // @route   GET /letter/:id
 // @desc    GET letter by id
-// @access  Public
+
 router.get("/:id", getLetter);
 
 module.exports = router;
