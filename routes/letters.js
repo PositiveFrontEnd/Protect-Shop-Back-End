@@ -7,6 +7,7 @@ const {
   deleteLetter,
   getLetters,
   updateLetter,
+  getLetter,
 } = require("../controllers/letters");
 
 // @route   POST /letter
@@ -26,5 +27,9 @@ router.delete("/:id", deleteLetter);
 // @desc    GET existing letter
 // @access  Public
 router.get("/", getLetters);
+// @route   GET /letter/:id
+// @desc    GET letter by id
+// @access  Public
+router.get("/:id", getLetter);
 
 module.exports = router;
