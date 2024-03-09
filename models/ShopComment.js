@@ -10,7 +10,6 @@ const ShopCommentSchema = new Schema(
     },
     comment: {
       type: String,
-      required: true,
     },
     date: {
       type: Date,
