@@ -13,9 +13,8 @@ const formValidationRules = [
     field: "firstName",
     method: "matches",
     validWhen: true,
-    args: [/^[a-zA-Zа-яА-ЯґҐєЄіІїЇёЁ']+$/u],
-    message:
-      "Allowed characters for First Name are a-z, A-Z, а-я, А-Я, ґ, Ґ, є, Є, і, І, ї, Ї, ё, Ё.",
+    args: [/^[a-zA-Zа-яА-Я]+$/],
+    message: "Allowed characters for First Name is a-z, A-Z, а-я, А-Я.",
   },
   {
     field: "firstName",
@@ -34,11 +33,9 @@ const formValidationRules = [
     field: "lastName",
     method: "matches",
     validWhen: true,
-    args: [/^[a-zA-Zа-яА-ЯґҐєЄіІїЇёЁ']+$/u],
-    message:
-      "Allowed characters for Last Name are a-z, A-Z, а-я, А-Я, ґ, Ґ, є, Є, і, І, ї, Ї, ё, Ё.",
+    args: [/^[a-zA-Zа-яА-Я]+$/],
+    message: "Allowed characters for Last Name is a-z, A-Z, а-я, А-Я.",
   },
-
   {
     field: "lastName",
     method: "isLength",
