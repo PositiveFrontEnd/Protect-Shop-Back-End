@@ -3,10 +3,8 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const path = require("path");
-const http = require("http");
-const initWebSocketServer = require("./sockets/websocketServer");
 require("dotenv").config();
-// const initWebSocketServer = require("./sockets/websocketServer");
+
 const globalConfigs = require("./routes/globalConfigs");
 const customers = require("./routes/customers");
 const catalog = require("./routes/catalog");
@@ -29,7 +27,6 @@ const letters = require("./routes/letters");
 const shopComment = require("./routes/shopComments");
 const cors = require("cors");
 const app = express();
-const server = http.createServer(app);
 
 app.use(cors());
 // Body parser middleware
@@ -63,8 +60,8 @@ app.use("/api/payment-methods", paymentMethods);
 app.use("/api/partners", partners);
 app.use("/api/letters", letters);
 app.use("/api/shop-comments", shopComment);
+
 // Server static assets if in production
-initWebSocketServer(server);
 if (process.env.NODE_ENV === "production") {
   // Set static folder
   app.use(express.static("client/build"));
@@ -82,11 +79,9 @@ try {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
-    .then(() => {
-      console.log("MongoDB Connected");
-      app.listen(port, () => console.log(`Server running on port ${port}`));
-    })
+    .then(() => console.log("MongoDB Connected"))
     .catch((err) => console.log(err));
+  app.listen(port, () => console.log(`Server running on port ${port}`));
 } catch (error) {
   console.log(error);
 }
