@@ -3,8 +3,10 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
 const path = require("path");
+const http = require("http");
+const initWebSocketServer = require("./sockets/websocketServer");
 require("dotenv").config();
-
+// const initWebSocketServer = require("./sockets/websocketServer");
 const globalConfigs = require("./routes/globalConfigs");
 const customers = require("./routes/customers");
 const catalog = require("./routes/catalog");
@@ -27,6 +29,7 @@ const letters = require("./routes/letters");
 const shopComment = require("./routes/shopComments");
 const cors = require("cors");
 const app = express();
+const server = http.createServer(app);
 
 app.use(cors());
 // Body parser middleware
@@ -61,6 +64,7 @@ app.use("/api/partners", partners);
 app.use("/api/letters", letters);
 app.use("/api/shop-comments", shopComment);
 // Server static assets if in production
+initWebSocketServer(server);
 if (process.env.NODE_ENV === "production") {
   // Set static folder
   app.use(express.static("client/build"));
